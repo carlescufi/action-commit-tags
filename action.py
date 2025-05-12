@@ -420,7 +420,7 @@ def main():
     for r in revs:
         merge = check_commit(urepo, br_str, target, r, merge)
         count += 1
-        stdout(f'- Processed commit {count}')
+        stdout(f'- Processed commit {count}/{len(revs)}')
 
     # Switch back to the previous branch
     stdout('main: switch')
