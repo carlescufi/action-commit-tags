@@ -272,7 +272,8 @@ def check_commit(urepo, ubranch, target, sha, merge):
 
         match = re.search(regex, body, re.MULTILINE)
         if not match:
-            die(f'{sha}: fromlist commit missing an "Upstream PR #:" reference')
+            err(f'{sha}: fromlist commit missing an "Upstream PR #:" reference')
+            return merge
         
         upr = match.group(1)
         stdout(f'fromlist: {upr}')
@@ -291,7 +292,8 @@ def check_commit(urepo, ubranch, target, sha, merge):
                 break
 
         if not usha:
-                die(f'{sha}: unable to match any commit from upstream PR #{upr}')
+                err(f'{sha}: unable to match any commit from upstream PR #{upr}')
+                return merge
 
     elif tag == 'fromtree':
         regex = r'^\(cherry picked from commit \b([a-f0-9]{40})\b\)'
