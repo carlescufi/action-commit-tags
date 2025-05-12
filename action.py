@@ -231,7 +231,7 @@ def check_commit(urepo, ubranch, target, sha, merge):
     
     if revert:
         if tag == 'mergeup':
-            die('Mergeup commits cannot be reverted')
+            die(f'{sha}: Mergeup commits cannot be reverted')
         regex = r'^This reverts commit \b([a-f0-9]{40})\b\.'
         match = re.search(regex, body, re.MULTILINE)
         if not match:
@@ -244,7 +244,7 @@ def check_commit(urepo, ubranch, target, sha, merge):
         # itself)
         count = runc_out(f'git -C {target} rev-list --merges --count {sha}^!')
         if count != '1':
-            die('mergeup used in a non-merge commit')
+            die(f'{sha}: mergeup used in a non-merge commit')
         if not re.match(r'^\[nrf mergeup\] Merge upstream up to commit \b([a-f0-9]{40})\b',
                          title):
             die(f'{sha}: Invalid mergeup commit title')
